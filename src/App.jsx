@@ -846,5 +846,435 @@ export default function App() {
         .animate-fadeIn { animation: fadeIn 0.35s ease-out; }
       `}</style>
     </div>
-  );
+  );// ============================================================
+// A&E — ADULTS  (15 cases)
+// Paste into your specialties array. Rename field keys if yours differ.
+// Schema used here: { id, specialty, difficulty, diagnosis, aliases, clues: [presenting, history, exam, labs, imaging] }
+// ============================================================
+
+{
+  id: 'ae-a-01',
+  specialty: 'A&E — Adults',
+  difficulty: 'Easy',
+  diagnosis: 'ST-elevation myocardial infarction',
+  aliases: ['STEMI', 'anterior MI', 'heart attack', 'acute MI'],
+  clues: [
+    '58-year-old man, central crushing chest pain for 40 minutes, radiating to left arm, sweaty and nauseated.',
+    'Smoker, hypertensive, father died of MI aged 55. Took GTN with no relief.',
+    'BP 148/92, HR 96, cold and clammy, chest clear, heart sounds normal.',
+    'Troponin markedly raised. Potassium 4.1.',
+    'ECG: 3 mm ST elevation V1–V4 with reciprocal ST depression in II, III, aVF.'
+  ]
+},
+{
+  id: 'ae-a-02',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Pulmonary embolism',
+  aliases: ['PE', 'acute pulmonary embolism'],
+  clues: [
+    '34-year-old woman, sudden pleuritic chest pain and breathlessness while at her desk.',
+    'Returned yesterday from a 10-hour flight. On combined oral contraceptive. No calf pain but right leg feels heavier.',
+    'RR 26, SpO2 92% on air, HR 118, BP 108/70, chest clear. Right calf 3 cm larger than left.',
+    'D-dimer 4,800. Troponin mildly raised. ABG: pO2 8.2, pCO2 3.9.',
+    'CTPA: filling defects in right main and segmental pulmonary arteries with right heart strain.'
+  ]
+},
+{
+  id: 'ae-a-03',
+  specialty: 'A&E — Adults',
+  difficulty: 'Hard',
+  diagnosis: 'Aortic dissection',
+  aliases: ['thoracic aortic dissection', 'type A aortic dissection', 'Stanford A dissection'],
+  clues: [
+    '62-year-old man, sudden tearing chest pain radiating to the back between the shoulder blades.',
+    'Long-standing poorly controlled hypertension. Pain hit maximum intensity within seconds.',
+    'BP 190/100 in right arm, 150/80 in left arm. Early diastolic murmur at the left sternal edge. Weak left radial pulse.',
+    'Troponin negative. D-dimer 3,200. Creatinine mildly raised.',
+    'CT aorta: intimal flap extending from aortic root to descending aorta with false lumen.'
+  ]
+},
+{
+  id: 'ae-a-04',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Tension pneumothorax',
+  aliases: ['tension pneumothorax', 'pneumothorax'],
+  clues: [
+    '24-year-old tall thin man, sudden severe right-sided chest pain and breathlessness while playing football.',
+    'Previous small pneumothorax two years ago, managed conservatively. No trauma today.',
+    'RR 32, SpO2 88% on air, HR 130, BP 88/54. Trachea deviated to the left. Absent breath sounds and hyperresonance on the right.',
+    'Bloods sent but treatment not delayed for results.',
+    'Needle decompression 2nd ICS MCL performed before imaging; subsequent CXR confirmed large right pneumothorax with mediastinal shift.'
+  ]
+},
+{
+  id: 'ae-a-05',
+  specialty: 'A&E — Adults',
+  difficulty: 'Easy',
+  diagnosis: 'Acute appendicitis',
+  aliases: ['appendicitis'],
+  clues: [
+    '22-year-old man, 18 hours of abdominal pain that started around the umbilicus and moved to the right iliac fossa.',
+    'Anorexia, one episode of vomiting, low-grade fever. No urinary symptoms.',
+    'Temp 37.9, tender at McBurney\'s point with guarding, positive Rovsing\'s sign.',
+    'WCC 15.2, neutrophils 12.1, CRP 88.',
+    'US: non-compressible blind-ending tubular structure in RIF, 9 mm diameter with periappendiceal fluid.'
+  ]
+},
+{
+  id: 'ae-a-06',
+  specialty: 'A&E — Adults',
+  difficulty: 'Hard',
+  diagnosis: 'Ruptured abdominal aortic aneurysm',
+  aliases: ['ruptured AAA', 'AAA rupture', 'ruptured abdominal aortic aneurysm'],
+  clues: [
+    '74-year-old man, sudden severe abdominal and back pain, then collapsed at home.',
+    'Known 5.8 cm AAA on surveillance. Smoker, hypertensive.',
+    'BP 82/48, HR 128, pale and clammy, pulsatile expansile mass in the epigastrium, tender abdomen.',
+    'Hb 84, lactate 5.2. Major haemorrhage protocol activated.',
+    'Bedside US: 6.5 cm infrarenal aortic aneurysm with retroperitoneal free fluid; transferred straight to theatre.'
+  ]
+},
+{
+  id: 'ae-a-07',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Ruptured ectopic pregnancy',
+  aliases: ['ectopic pregnancy', 'ruptured ectopic'],
+  clues: [
+    '28-year-old woman, sudden left iliac fossa pain and shoulder-tip pain, feeling faint.',
+    'LMP 7 weeks ago, previously irregular. Previous chlamydia infection. Not using contraception.',
+    'BP 94/58, HR 116, generalised abdominal tenderness with guarding, cervical excitation on PV exam.',
+    'Urine β-hCG positive. Hb 96. Serum β-hCG 3,200.',
+    'Transvaginal US: empty uterus, complex adnexal mass on the left, free fluid in the pouch of Douglas.'
+  ]
+},
+{
+  id: 'ae-a-08',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Diabetic ketoacidosis',
+  aliases: ['DKA', 'diabetic ketoacidosis'],
+  clues: [
+    '19-year-old woman, 2 days of vomiting, abdominal pain, polyuria and polydipsia.',
+    'Type 1 diabetes, ran out of insulin cartridges last weekend. Recent sore throat.',
+    'RR 28 with deep sighing breathing, dry mucous membranes, HR 118, BP 104/62, ketotic breath.',
+    'Glucose 28, pH 7.11, HCO3 8, ketones 5.8, K 5.4.',
+    'CXR clear. ECG: peaked T waves.'
+  ]
+},
+{
+  id: 'ae-a-09',
+  specialty: 'A&E — Adults',
+  difficulty: 'Hard',
+  diagnosis: 'Subarachnoid haemorrhage',
+  aliases: ['SAH', 'subarachnoid haemorrhage', 'aneurysmal subarachnoid haemorrhage'],
+  clues: [
+    '46-year-old woman, sudden severe occipital headache while lifting a suitcase — "the worst of my life", peak within seconds.',
+    'Brief loss of consciousness, then vomited twice. Photophobia. No prior headaches.',
+    'GCS 14, neck stiffness, no focal neurology, fundoscopy shows subhyaloid haemorrhage.',
+    'Bloods unremarkable. LP (12 hours after onset) planned if imaging negative.',
+    'Non-contrast CT head: hyperdensity in the basal cisterns and Sylvian fissures.'
+  ]
+},
+{
+  id: 'ae-a-10',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Ischaemic stroke',
+  aliases: ['acute ischaemic stroke', 'stroke', 'CVA', 'MCA stroke'],
+  clues: [
+    '68-year-old man, sudden right-sided weakness and slurred speech noticed 90 minutes ago by his wife.',
+    'AF, non-compliant with apixaban. Hypertensive, ex-smoker.',
+    'BP 176/94, irregularly irregular pulse, right facial droop, right arm 2/5, right leg 3/5, expressive dysphasia. NIHSS 12.',
+    'Glucose 6.4. INR not applicable (DOAC). Platelets normal.',
+    'CT head: no haemorrhage, loss of grey-white differentiation in left MCA territory; CTA shows left M1 occlusion.'
+  ]
+},
+{
+  id: 'ae-a-11',
+  specialty: 'A&E — Adults',
+  difficulty: 'Easy',
+  diagnosis: 'Anaphylaxis',
+  aliases: ['anaphylaxis', 'anaphylactic shock'],
+  clues: [
+    '31-year-old woman, sudden facial swelling, wheeze and light-headedness 15 minutes after eating a takeaway.',
+    'Known peanut allergy, carries an EpiPen but left it at home. No previous hospital admissions.',
+    'RR 30 with audible wheeze and stridor, SpO2 91%, HR 132, BP 82/48, urticarial rash on chest and arms, tongue swelling.',
+    'Tryptase sent. Bloods otherwise unremarkable.',
+    'CXR (after stabilisation) clear.'
+  ]
+},
+{
+  id: 'ae-a-12',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Paracetamol overdose',
+  aliases: ['paracetamol overdose', 'acetaminophen overdose', 'paracetamol poisoning'],
+  clues: [
+    '23-year-old woman brought in by a friend, took an unknown number of tablets 6 hours ago after an argument.',
+    'Empty box of 32 x 500 mg paracetamol found. Also drank half a bottle of wine. History of depression.',
+    'Alert, mildly nauseated, no abdominal tenderness, no jaundice, GCS 15.',
+    'Paracetamol level 180 mg/L at 6 hours (above treatment line). ALT 42, INR 1.1, creatinine 78.',
+    'No imaging required. N-acetylcysteine started immediately per nomogram.'
+  ]
+},
+{
+  id: 'ae-a-13',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Acute pancreatitis',
+  aliases: ['pancreatitis', 'acute pancreatitis', 'gallstone pancreatitis'],
+  clues: [
+    '52-year-old woman, severe epigastric pain radiating to the back for 12 hours, with vomiting.',
+    'Previous biliary colic, high BMI, non-drinker. Pain worse lying flat, better sitting forward.',
+    'Temp 37.8, HR 108, BP 122/74, tender epigastrium with guarding, reduced bowel sounds.',
+    'Amylase 1,850, WCC 16, CRP 210, calcium 2.05, glucose 11.2, LDH raised.',
+    'US abdomen: gallstones and a dilated CBD; CT (48 h) shows peripancreatic oedema without necrosis.'
+  ]
+},
+{
+  id: 'ae-a-14',
+  specialty: 'A&E — Adults',
+  difficulty: 'Hard',
+  diagnosis: 'Meningococcal septicaemia',
+  aliases: ['meningococcal sepsis', 'meningococcal septicaemia', 'meningococcaemia', 'Neisseria meningitidis sepsis'],
+  clues: [
+    '19-year-old university student, 6 hours of fever, myalgia, cold hands and feet, now drowsy.',
+    'Housemate had similar illness last week. No foreign travel. Not vaccinated against MenB.',
+    'Temp 39.4, RR 28, HR 132, BP 84/50, GCS 13, non-blanching purpuric rash on trunk and limbs, mottled peripheries.',
+    'Lactate 5.8, WCC 22, CRP 340, platelets 68, INR 1.6, procalcitonin markedly raised.',
+    'CT head normal; LP deferred due to coagulopathy. Blood cultures grew Neisseria meningitidis.'
+  ]
+},
+{
+  id: 'ae-a-15',
+  specialty: 'A&E — Adults',
+  difficulty: 'Medium',
+  diagnosis: 'Upper GI bleed from bleeding peptic ulcer',
+  aliases: ['upper GI bleed', 'bleeding peptic ulcer', 'duodenal ulcer bleed', 'UGIB'],
+  clues: [
+    '64-year-old man, three episodes of coffee-ground vomiting and one melaena stool this morning.',
+    'Long-term ibuprofen for knee osteoarthritis. Drinks 30 units/week. Previous H. pylori, never treated.',
+    'BP 96/60 lying, 78/50 sitting, HR 118, cool peripheries, PR: melaena on the glove.',
+    'Hb 78 (previously 138), urea 18, creatinine 92, INR 1.1, Glasgow-Blatchford 12.',
+    'OGD: single 1.5 cm ulcer in the posterior duodenal bulb with a visible vessel — clipped and adrenaline injected.'
+  ]
+},
+
+// ============================================================
+// A&E — PAEDIATRICS  (15 cases, neonate → 16y)
+// ============================================================
+
+{
+  id: 'ae-p-01',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Easy',
+  diagnosis: 'Bronchiolitis',
+  aliases: ['bronchiolitis', 'RSV bronchiolitis', 'acute viral bronchiolitis'],
+  clues: [
+    '5-month-old, 3-day history of coryza, now with cough, wheeze and poor feeding (taking under half normal volumes).',
+    'Winter month, older sibling has a cold. Born at term, no comorbidities.',
+    'RR 62, SpO2 91% on air, subcostal and intercostal recession, tracheal tug, widespread fine crackles and expiratory wheeze.',
+    'Capillary blood gas: pH 7.34, pCO2 6.1. NPA positive for RSV.',
+    'CXR (only done because of severity): hyperinflation and patchy perihilar shadowing, no focal consolidation.'
+  ]
+},
+{
+  id: 'ae-p-02',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Easy',
+  diagnosis: 'Croup',
+  aliases: ['croup', 'viral croup', 'laryngotracheobronchitis'],
+  clues: [
+    '2-year-old boy, woken in the night with a barking cough and noisy breathing.',
+    'Coryza for 2 days. Fully vaccinated. No drooling, still drinking.',
+    'Temp 38.1, RR 36, SpO2 96%, audible stridor at rest, mild intercostal recession, no tripod position.',
+    'Bloods not indicated.',
+    'No imaging required. Improved after single dose of oral dexamethasone in the department.'
+  ]
+},
+{
+  id: 'ae-p-03',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Medium',
+  diagnosis: 'Intussusception',
+  aliases: ['intussusception', 'ileocolic intussusception'],
+  clues: [
+    '9-month-old, episodes of sudden inconsolable crying with drawing up of legs every 15–20 minutes for a day.',
+    'Between episodes, appears pale and lethargic. Recent viral URTI. One episode of "redcurrant jelly" stool.',
+    'Sausage-shaped mass palpable in the right upper quadrant. Empty right iliac fossa. HR 148, cap refill 3 sec.',
+    'Bloods: WCC 13, CRP 24, lactate 2.4.',
+    'US abdomen: "target sign" in the right upper quadrant. Reduced by air enema in radiology.'
+  ]
+},
+{
+  id: 'ae-p-04',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Hard',
+  diagnosis: 'Meningococcal septicaemia',
+  aliases: ['meningococcal sepsis', 'meningococcal septicaemia', 'meningococcaemia'],
+  clues: [
+    '3-year-old, unwell for 8 hours with fever, lethargy and now a rash.',
+    'Previously well, fully immunised except MenB (parental choice). No sick contacts.',
+    'Temp 39.6, HR 178, cap refill 5 sec, cool peripheries, RR 44, GCS 13, non-blanching purpuric spots on trunk and lower limbs.',
+    'Lactate 4.9, WCC 24, CRP 260, platelets 74, INR 1.5, glucose 3.1.',
+    'CT head normal; LP deferred. Blood culture: Gram-negative diplococci — Neisseria meningitidis.'
+  ]
+},
+{
+  id: 'ae-p-05',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Medium',
+  diagnosis: 'Diabetic ketoacidosis (new-onset type 1 diabetes)',
+  aliases: ['DKA', 'diabetic ketoacidosis', 'new onset T1DM', 'paediatric DKA'],
+  clues: [
+    '11-year-old girl, 3 weeks of polyuria, polydipsia and weight loss; today vomiting and abdominal pain.',
+    'No previous medical history. Maternal aunt has type 1 diabetes.',
+    'RR 32 with Kussmaul breathing, dry mucous membranes, HR 128, GCS 14, ketotic breath, mild abdominal tenderness.',
+    'Glucose 32, pH 7.08, HCO3 7, ketones 6.2, Na 132, K 5.1.',
+    'CXR clear. ECG normal.'
+  ]
+},
+{
+  id: 'ae-p-06',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Easy',
+  diagnosis: 'Simple febrile convulsion',
+  aliases: ['febrile convulsion', 'febrile seizure', 'simple febrile seizure'],
+  clues: [
+    '18-month-old, generalised tonic-clonic seizure lasting 2 minutes at home, now sleepy.',
+    'Fever and coryza for 24 hours. Fully immunised. No family history of epilepsy. First episode.',
+    'Temp 39.2, red bulging tympanic membrane on the right, no rash, no neck stiffness, moving all limbs equally on waking, GCS returning to 15 over 30 min.',
+    'CBG normal. No routine bloods indicated.',
+    'No imaging required. Discharged with safety-netting after period of observation.'
+  ]
+},
+{
+  id: 'ae-p-07',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Medium',
+  diagnosis: 'Pyloric stenosis',
+  aliases: ['pyloric stenosis', 'infantile hypertrophic pyloric stenosis', 'IHPS'],
+  clues: [
+    '5-week-old boy, non-bilious projectile vomiting after every feed for a week, hungry immediately afterwards.',
+    'First-born, formula-fed. Weight has dropped below birth centile.',
+    'Sunken fontanelle, dry mucous membranes, visible peristalsis across epigastrium, olive-sized mass palpable in the right upper quadrant during a test feed.',
+    'Capillary gas: pH 7.52, HCO3 34, Cl 88, K 3.1 — hypochloraemic hypokalaemic metabolic alkalosis.',
+    'US abdomen: pyloric muscle thickness 5 mm, channel length 18 mm.'
+  ]
+},
+{
+  id: 'ae-p-08',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Medium',
+  diagnosis: 'Testicular torsion',
+  aliases: ['testicular torsion', 'torsion of the testis'],
+  clues: [
+    '14-year-old boy, sudden severe left scrotal pain 3 hours ago while playing rugby, with one episode of vomiting.',
+    'Previous similar transient episodes that self-resolved. No urinary symptoms, no trauma.',
+    'Left testis high-riding, horizontal lie, exquisitely tender, absent cremasteric reflex, no relief on elevation (negative Prehn\'s sign).',
+    'Urine dip negative for leucocytes and nitrites.',
+    'No imaging — taken straight to theatre for scrotal exploration.'
+  ]
+},
+{
+  id: 'ae-p-09',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Hard',
+  diagnosis: 'Non-accidental injury',
+  aliases: ['non-accidental injury', 'NAI', 'physical child abuse', 'inflicted injury'],
+  clues: [
+    '4-month-old brought in "not moving her arm" after "rolling off the sofa" 2 days ago.',
+    'Multiple attendances at different EDs. Story changes between parents. Not yet developmentally rolling.',
+    'Bruising in different stages of healing on the trunk and thighs, frenular tear, tender swollen left upper arm, retinal haemorrhages on fundoscopy.',
+    'FBC and clotting normal — excludes bleeding disorder.',
+    'Skeletal survey: spiral fracture of the left humerus, healing posterior rib fractures; CT head: subdural haemorrhage.'
+  ]
+},
+{
+  id: 'ae-p-10',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Medium',
+  diagnosis: 'Inhaled foreign body',
+  aliases: ['inhaled foreign body', 'foreign body aspiration', 'aspirated foreign body'],
+  clues: [
+    '2-year-old, sudden coughing and choking while eating peanuts an hour ago, now with a persistent cough and wheeze.',
+    'No fever. Previously well. No history of asthma. Recovered from initial choking episode.',
+    'RR 36, SpO2 94%, unilateral reduced air entry on the right with monophonic wheeze, no stridor.',
+    'FBC and CRP normal.',
+    'CXR (inspiratory/expiratory): hyperinflation of the right lung on expiration — suggests ball-valve obstruction. Rigid bronchoscopy retrieved a peanut fragment.'
+  ]
+},
+{
+  id: 'ae-p-11',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Easy',
+  diagnosis: 'Acute asthma exacerbation',
+  aliases: ['acute asthma', 'asthma exacerbation', 'acute severe asthma'],
+  clues: [
+    '8-year-old boy, worsening wheeze and shortness of breath overnight, unable to speak in full sentences.',
+    'Known asthmatic on inhaled steroid, poor adherence. Recent cold. Cat at home.',
+    'RR 38, SpO2 90% on air, HR 138, widespread polyphonic wheeze, subcostal recession, PEFR 45% predicted.',
+    'CBG: pH 7.36, pCO2 4.2 (normal — worry if rising).',
+    'CXR (done because of severity): hyperinflation, no focal consolidation, no pneumothorax.'
+  ]
+},
+{
+  id: 'ae-p-12',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Easy',
+  diagnosis: 'Gastroenteritis with dehydration',
+  aliases: ['gastroenteritis', 'viral gastroenteritis', 'acute gastroenteritis'],
+  clues: [
+    '3-year-old, 2 days of watery diarrhoea (8 episodes/day) and vomiting. Nursery outbreak.',
+    'Reduced wet nappies (last one 8 hours ago). Drinking small sips but vomiting them back.',
+    'HR 148, cap refill 3 sec, dry mucous membranes, sunken eyes, reduced skin turgor, alert, weight 4% below baseline.',
+    'U&E: Na 141, K 3.6, urea 7.8, creatinine 42, glucose 4.1.',
+    'No imaging. Improved with a trial of oral rehydration solution via NG tube.'
+  ]
+},
+{
+  id: 'ae-p-13',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Hard',
+  diagnosis: 'Kawasaki disease',
+  aliases: ['Kawasaki disease', 'Kawasaki', 'mucocutaneous lymph node syndrome'],
+  clues: [
+    '4-year-old, high fever for 6 days unresponsive to paracetamol, increasingly irritable.',
+    'No sick contacts, fully immunised, no foreign travel. Antibiotics from GP made no difference.',
+    'Bilateral non-purulent conjunctivitis, cracked red lips and strawberry tongue, polymorphous truncal rash, unilateral cervical lymphadenopathy, red swollen hands with early peeling of the fingertips.',
+    'WCC 18, CRP 180, platelets 620, ALT 84, albumin 28, sterile pyuria on urine dip.',
+    'Echocardiogram: mild dilatation of the left main coronary artery — no aneurysms yet.'
+  ]
+},
+{
+  id: 'ae-p-14',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Medium',
+  diagnosis: 'Henoch–Schönlein purpura',
+  aliases: ['Henoch-Schonlein purpura', 'HSP', 'IgA vasculitis'],
+  clues: [
+    '6-year-old boy, palpable purpuric rash over the buttocks and lower legs for 3 days, now with colicky abdominal pain and a swollen painful right ankle.',
+    'Recent URTI two weeks ago. No sick contacts. No bleeding tendency.',
+    'Temp 37.2, symmetrical palpable purpura on extensor surfaces of lower limbs and buttocks, tender right ankle joint, soft abdomen with mild periumbilical tenderness.',
+    'Platelets 340 (normal), clotting normal, urine dip: 2+ blood, 1+ protein. Creatinine normal.',
+    'US abdomen: no intussusception. Renal function to be monitored serially.'
+  ]
+},
+{
+  id: 'ae-p-15',
+  specialty: 'A&E — Paediatrics',
+  difficulty: 'Hard',
+  diagnosis: 'Neonatal sepsis (early-onset, group B streptococcus)',
+  aliases: ['neonatal sepsis', 'early-onset neonatal sepsis', 'group B strep sepsis', 'GBS sepsis'],
+  clues: [
+    '2-day-old term neonate, poor feeding, grunting and lethargy since this morning.',
+    'Mother had prolonged rupture of membranes (28 hours) and did not receive intrapartum antibiotics. GBS status unknown.',
+    'Temp 35.6, RR 68, grunting with nasal flaring, SpO2 90% in air, cap refill 4 sec, mottled, floppy tone, weak cry.',
+    'CBG: pH 7.18, lactate 6.4, glucose 2.1. WCC 3.2 with neutropenia, CRP 92, platelets 82.',
+    'CXR: bilateral streaky infiltrates. Blood culture grew group B streptococcus.'
+  ]
+},
 }
