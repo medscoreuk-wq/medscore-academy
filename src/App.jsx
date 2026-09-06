@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { Mic, MicOff, Volume2, VolumeX, ChevronRight, RotateCcw, Home, Check, X, Stethoscope, Trophy } from 'lucide-react';
+import { Mic, MicOff, Volume2, VolumeX, ChevronRight, RotateCcw, Home, Check, X, Stethoscope, Trophy, Settings, User, ArrowRight, Sparkles } from 'lucide-react';
 
 const LOGO = '/logo.jpg';
 
@@ -149,6 +149,28 @@ const DIFF_LABEL = { e: 'Easy', m: 'Medium', h: 'Hard' };
 const DIFF_COLOR = { e: 'bg-emerald-100 text-emerald-700 border-emerald-200', m: 'bg-amber-100 text-amber-700 border-amber-200', h: 'bg-rose-100 text-rose-700 border-rose-200' };
 const CLUE_LABELS = ['Presenting complaint', 'History', 'Examination', 'Investigations', 'Special test / Imaging'];
 
+const CAREER_STAGES = [
+  { id: 'student', label: 'Medical student' },
+  { id: 'foundation', label: 'Foundation / Intern (FY / PGY1)' },
+  { id: 'core', label: 'Core trainee / SHO' },
+  { id: 'registrar', label: 'Resident / Registrar' },
+  { id: 'consultant', label: 'Consultant / Attending / SAS' },
+  { id: 'pa', label: 'Physician Associate / ANP' },
+  { id: 'browsing', label: 'Just browsing' },
+];
+const TRAINING_SYSTEMS = [
+  { id: 'uk', label: 'UK (MBBS)' },
+  { id: 'us_md', label: 'US (MD)' },
+  { id: 'us_do', label: 'US (DO)' },
+  { id: 'ireland', label: 'Ireland' },
+  { id: 'anz', label: 'Australia / NZ' },
+  { id: 'canada', label: 'Canada' },
+  { id: 'eu', label: 'EU' },
+  { id: 'other', label: 'Other' },
+];
+const PROFILE_KEY = 'medscore_profile_v1';
+
+
 const normalize = (s) => s.toLowerCase()
   .replace(/[^a-z0-9\s]/g, ' ')
   .replace(/\s+/g, ' ')
@@ -181,9 +203,172 @@ function levenshtein(a, b) {
   return dp[m][n];
 }
 
+
+// ============ PROFILE SETUP COMPONENT ============
+function ProfileSetup({ initial, isEdit, onSave, onCancel, onClear }) {
+  const [name, setName] = useState(initial?.name || '');
+  const [email, setEmail] = useState(initial?.email || '');
+  const [stage, setStage] = useState(initial?.stage || '');
+  const [system, setSystem] = useState(initial?.system || '');
+  const [specialties, setSpecialties] = useState(initial?.specialties || []);
+
+  const toggleSpecialty = (sp) => {
+    setSpecialties(prev => prev.includes(sp) ? prev.filter(s => s !== sp) : [...prev, sp]);
+  };
+
+  const canSave = name.trim().length > 0 && stage && system;
+
+  const handleSave = () => {
+    if (!canSave) return;
+    onSave({
+      name: name.trim(),
+      email: email.trim(),
+      stage,
+      system,
+      specialties,
+      createdAt: initial?.createdAt || Date.now(),
+      updatedAt: Date.now(),
+    });
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 p-4">
+      <div className="max-w-2xl mx-auto pt-6 pb-12">
+        <div className="text-center mb-8">
+          <img src={LOGO} alt="MedScore" className="w-24 h-24 mx-auto mb-3 object-contain" />
+          <h1 className="text-2xl font-bold text-slate-800 mb-1">
+            {isEdit ? 'Your profile' : 'Welcome to MedScore Academy'}
+          </h1>
+          <p className="text-slate-500 text-sm">
+            {isEdit ? 'Update your details anytime.' : "Tell us a bit about you so we can tailor cases to your level."}
+          </p>
+        </div>
+
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 space-y-5">
+          {/* Name */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Your name <span className="text-rose-500">*</span></label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="e.g. Alex Morgan"
+              className="w-full px-3 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Email <span className="text-slate-400 font-normal">(optional)</span></label>
+            <input
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="w-full px-3 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
+            />
+            <p className="text-xs text-slate-400 mt-1">Stored only on this device. Nothing sent anywhere.</p>
+          </div>
+
+          {/* Career stage */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Career stage <span className="text-rose-500">*</span></label>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+              {CAREER_STAGES.map(cs => (
+                <button
+                  key={cs.id}
+                  type="button"
+                  onClick={() => setStage(cs.id)}
+                  className="text-left px-3 py-2 rounded-lg border-2 text-sm transition"
+                  style={stage === cs.id
+                    ? { borderColor: '#1E88E5', backgroundColor: '#E3F2FD', color: '#1565C0', fontWeight: 500 }
+                    : { borderColor: '#E2E8F0', color: '#475569' }}
+                >
+                  {cs.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Training system */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">Training system <span className="text-rose-500">*</span></label>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {TRAINING_SYSTEMS.map(ts => (
+                <button
+                  key={ts.id}
+                  type="button"
+                  onClick={() => setSystem(ts.id)}
+                  className="text-left px-3 py-2 rounded-lg border-2 text-sm transition"
+                  style={system === ts.id
+                    ? { borderColor: '#1E88E5', backgroundColor: '#E3F2FD', color: '#1565C0', fontWeight: 500 }
+                    : { borderColor: '#E2E8F0', color: '#475569' }}
+                >
+                  {ts.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Specialties of interest */}
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-1">Specialties you want to focus on</label>
+            <p className="text-xs text-slate-400 mb-2">Pick any that interest you. You'll always be able to see the rest too.</p>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              {Object.keys(CASES).map(sp => (
+                <button
+                  key={sp}
+                  type="button"
+                  onClick={() => toggleSpecialty(sp)}
+                  className="text-left px-3 py-2 rounded-lg border-2 text-sm transition"
+                  style={specialties.includes(sp)
+                    ? { borderColor: '#1E88E5', backgroundColor: '#E3F2FD', color: '#1565C0', fontWeight: 500 }
+                    : { borderColor: '#E2E8F0', color: '#475569' }}
+                >
+                  {sp}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="mt-6 flex gap-3">
+          {isEdit && (
+            <button onClick={onCancel} className="flex-1 py-3 bg-white border border-slate-200 text-slate-700 rounded-xl font-medium hover:bg-slate-50 transition">
+              Cancel
+            </button>
+          )}
+          <button
+            onClick={handleSave}
+            disabled={!canSave}
+            className="flex-1 py-3 text-white font-semibold rounded-xl disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center justify-center gap-2 shadow-md"
+            style={{ background: 'linear-gradient(135deg, #4FC3E0 0%, #1E88E5 100%)' }}
+          >
+            {isEdit ? 'Save changes' : 'Get started'} <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+
+        {isEdit && (
+          <div className="mt-6 text-center">
+            <button onClick={() => { if (confirm('Delete your profile? This clears your data on this device.')) onClear(); }} className="text-xs text-rose-500 hover:text-rose-600 underline">
+              Delete profile and start over
+            </button>
+          </div>
+        )}
+
+        <p className="text-xs text-slate-400 text-center mt-6">
+          Your profile lives only on this device. No accounts, no tracking.
+        </p>
+      </div>
+    </div>
+  );
+}
+
 // ============ APP ============
 export default function App() {
-  const [screen, setScreen] = useState('home'); // home | play | end
+  const [profile, setProfile] = useState(null); // {name, email, stage, system, specialties: []}
+  const [screen, setScreen] = useState('loading'); // loading | setup | home | play | end | editProfile
   const [specialty, setSpecialty] = useState(null);
   const [difficulty, setDifficulty] = useState('all');
   const [caseIdx, setCaseIdx] = useState(0);
@@ -199,6 +384,35 @@ export default function App() {
 
   const recognitionRef = useRef(null);
   const currentCase = filteredCases[caseIdx];
+
+  // Load profile on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(PROFILE_KEY);
+      if (raw) {
+        const p = JSON.parse(raw);
+        setProfile(p);
+        setScreen('home');
+      } else {
+        setScreen('setup');
+      }
+    } catch (e) {
+      setScreen('setup');
+    }
+  }, []);
+
+  const saveProfile = (p) => {
+    try {
+      localStorage.setItem(PROFILE_KEY, JSON.stringify(p));
+      setProfile(p);
+    } catch (e) { console.error(e); }
+  };
+
+  const clearProfile = () => {
+    try { localStorage.removeItem(PROFILE_KEY); } catch (e) {}
+    setProfile(null);
+    setScreen('setup');
+  };
 
   // Init speech recognition
   useEffect(() => {
@@ -327,22 +541,86 @@ export default function App() {
   }, [input, specialty]);
 
   // ============ RENDER ============
+
+  // ===== LOADING SCREEN =====
+  if (screen === 'loading') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 flex items-center justify-center">
+        <img src={LOGO} alt="MedScore" className="w-24 h-24 object-contain opacity-70 animate-pulse" />
+      </div>
+    );
+  }
+
+  // ===== SETUP / EDIT PROFILE SCREEN =====
+  if (screen === 'setup' || screen === 'editProfile') {
+    return <ProfileSetup
+      initial={profile}
+      isEdit={screen === 'editProfile'}
+      onSave={(p) => { saveProfile(p); setScreen('home'); }}
+      onCancel={() => setScreen('home')}
+      onClear={clearProfile}
+    />;
+  }
+
   if (screen === 'home') {
+    const userSpecialties = profile?.specialties || [];
+    const otherSpecialties = Object.keys(CASES).filter(sp => !userSpecialties.includes(sp));
+    const firstName = (profile?.name || '').split(' ')[0];
     return (
       <div className="min-h-screen bg-gradient-to-br from-sky-50 via-white to-blue-50 p-4">
-        <div className="max-w-3xl mx-auto pt-6">
-          <div className="text-center mb-8">
-            <img src={LOGO} alt="MedScore" className="w-32 h-32 mx-auto mb-2 object-contain" />
-            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold tracking-widest uppercase" style={{ backgroundColor: '#E3F2FD', color: '#1565C0' }}>
-              Academy
+        <div className="max-w-3xl mx-auto pt-4">
+          {/* Top bar with profile chip */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-2">
+              <img src={LOGO} alt="MedScore" className="w-10 h-10 object-contain" />
+              <div>
+                <div className="text-sm font-semibold text-slate-800 leading-tight">
+                  <span style={{ color: '#4FC3E0' }}>MED</span><span style={{ color: '#1565C0' }}>SCORE</span> Academy
+                </div>
+                {firstName && <div className="text-xs text-slate-500">Hi, {firstName}</div>}
+              </div>
             </div>
-            <p className="text-slate-600 mt-4">Guess the diagnosis. One clue at a time. Voice enabled.</p>
+            <button onClick={() => setScreen('editProfile')} className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition" title="Profile settings">
+              <Settings className="w-5 h-5" />
+            </button>
           </div>
 
+          <div className="text-center mb-6">
+            <p className="text-slate-600 text-sm">Guess the diagnosis. One clue at a time. Voice enabled.</p>
+          </div>
+
+          {/* For You section */}
+          {userSpecialties.length > 0 && (
+            <div className="bg-white rounded-2xl shadow-sm p-6 mb-4 border border-slate-200">
+              <div className="flex items-center gap-2 mb-3">
+                <Sparkles className="w-4 h-4" style={{ color: '#1E88E5' }} />
+                <h2 className="font-semibold text-slate-700">For you</h2>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {userSpecialties.map(sp => (
+                  <button
+                    key={sp}
+                    onClick={() => setSpecialty(sp)}
+                    className="p-4 rounded-xl border-2 text-sm font-medium transition"
+                    style={specialty === sp
+                      ? { borderColor: '#1E88E5', backgroundColor: '#E3F2FD', color: '#1565C0' }
+                      : { borderColor: '#BBDEFB', backgroundColor: '#F5FBFF', color: '#1565C0' }}
+                  >
+                    {sp}
+                    <div className="text-xs text-slate-400 mt-1">{CASES[sp].length} cases</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* All / Explore More section */}
           <div className="bg-white rounded-2xl shadow-sm p-6 mb-6 border border-slate-200">
-            <h2 className="font-semibold text-slate-700 mb-3">Choose a specialty</h2>
+            <h2 className="font-semibold text-slate-700 mb-3">
+              {userSpecialties.length > 0 ? 'Explore more' : 'Choose a specialty'}
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {Object.keys(CASES).map(sp => (
+              {otherSpecialties.map(sp => (
                 <button
                   key={sp}
                   onClick={() => setSpecialty(sp)}
