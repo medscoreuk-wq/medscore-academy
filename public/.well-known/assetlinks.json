@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "com.medscore.academy",
+        "sha256_cert_fingerprints": ["4A:FC:20:AF:AF:A5:1D:E9:71:54:06:6F:8D:AD:5C:2D:1C:D8:1F:28:EA:CF:04:F1:FD:F1:B8:CB:51:1E:3D:07"]
+      }
+    }]
