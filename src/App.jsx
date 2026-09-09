@@ -458,20 +458,33 @@ export default function App() {
     if (!SR) return;
     const rec = new SR();
     rec.lang = 'en-GB';
-    rec.interimResults = false;
+    rec.interimResults = true;      // live transcription while speaking
     rec.maxAlternatives = 3;
-    rec.continuous = false;
+    rec.continuous = true;          // keep listening until user presses Done
+
+    let finalTranscript = '';
+
+    rec.onstart = () => { finalTranscript = ''; };
+
     rec.onresult = (e) => {
-      const alts = [];
-      for (let i = 0; i < e.results[0].length; i++) alts.push(e.results[0][i].transcript);
-      setInput(alts[0]);
-      setListening(false);
+      let interim = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        const transcript = e.results[i][0].transcript;
+        if (e.results[i].isFinal) {
+          finalTranscript += transcript + ' ';
+        } else {
+          interim += transcript;
+        }
+      }
+      // fills the input box live as you speak
+      setInput((finalTranscript + interim).trim());
     };
+
     rec.onerror = (e) => { setVoiceError(e.error || 'voice error'); setListening(false); };
     rec.onend = () => setListening(false);
     recognitionRef.current = rec;
   }, []);
-
+  
   const startGame = () => {
     let pool = CASES[specialty];
     if (difficulty !== 'all') pool = pool.filter(c => c.diff === difficulty);
